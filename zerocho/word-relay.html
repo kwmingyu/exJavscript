@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>끝말잇기</title>
+  </head>
+  <body>
+    <div><span id="order">1</span> 번째참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text" /> <button>입력</button>
+    <script>
+      const $button = document.querySelector("button");
+      const $input = document.querySelector("input");
+      const $word = document.querySelector("#word");
+      const $order = document.querySelector("#order");
+      let word; //제시어
+      let newWord; //새로 입력한 단어.
+      let isCheck; //3글자이다.
+      const number = +prompt("참가자는 몇 명인가요");
+
+      const onClickButton = () => {
+        if (number == null || number == "") {
+          alert("참가자 인원수를 입력하지않았습니다.");
+        } else {
+          if ((!word || word[word.length - 1] === newWord[0]) && isCheck) {
+            //입력할수있는단어는 무조건 세 글자, 첫단어도 마찬가지.
+            //제시어가 비어있거나, 비어있지않고 입력한 단어가 올바르다.
+            word = newWord;
+            $word.textContent = word;
+            const order = Number($order.textContent);
+            if (order + 1 > number) {
+              $order.textContent = 1;
+            } else {
+              $order.textContent = order + 1;
+            }
+          } else {
+            //제시어가 비어있지않다.
+            //올바르지 않다.
+            alert("올바르지않습니다.");
+          }
+          $input.focus();
+          $input.value = "";
+        }
+      };
+
+      const onInput = (event) => {
+        newWord = event.target.value;
+        if (newWord.length === 3) {
+          isCheck = true; //3글자이다.
+        } else {
+          isCheck = false;
+        }
+      };
+
+      $button.addEventListener("click", onClickButton);
+      $input.addEventListener("input", onInput);
+    </script>
+  </body>
+</html>
