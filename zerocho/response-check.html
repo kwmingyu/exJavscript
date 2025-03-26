@@ -14,6 +14,9 @@
       #screen.waiting {
         background-color: aqua;
       }
+      #screen.waring {
+        background-color: gray;
+      }
       #screen.ready {
         background-color: red;
         color: white;
@@ -26,9 +29,11 @@
   <body>
     <div id="screen" class="waiting">클릭해서 테스트를 시작하세요</div>
     <div id="result"></div>
+    <div id="rank"></div>
     <script>
       const $screen = document.querySelector("#screen");
       const $result = document.querySelector("#result");
+      const $rank = document.querySelector("#rank");
       let startTime;
       let endTime;
       let timeoutId;
@@ -46,14 +51,19 @@
           clearTimeout(timeoutId);
 
           $screen.classList.replace("ready", "waiting");
-          $screen.textContent = "너무 성급하군요!";
+          $screen.textContent = "너무 성급하군요! 초록색이 되면 클릭하세요!";
         } else if ($screen.classList.contains("now")) {
           endTime = new Date();
           let current = endTime - startTime;
           record.push(current);
+          record.sort((a, b) => a - b);
+          console.log(record);
           let average = record.reduce((a, c) => a + c) / record.length;
-          $result.textContent = `현재 : ${current}ms 평균 : ${average}ms`;
-
+          $result.textContent = `현재 : ${Math.floor(
+            current
+          )}ms 평균 : ${Math.floor(average)}ms`;
+          $rank.textContent = `rank1 : ${record[0]} rank2 : ${record[1]} 
+          rank3 :${record[2]} rank4 : ${record[3]} rank5 : ${record[4]}`;
           $screen.classList.replace("now", "waiting");
           $screen.textContent = "클릭해서 시작하세요";
         }
