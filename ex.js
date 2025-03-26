@@ -1,11 +1,15 @@
-function solution(numbers) {
-  let answer;
-  let sum = 0;
-  numbers.forEach((element) => (sum += element));
-  console.log(sum);
-  console.log(numbers.length);
-  return (answer = sum / numbers.length);
+function solution(emergency) {
+  var answer = [...emergency].sort((a, b) => b - a);
+  console.log(emergency);
+  console.log(answer);
+  answer.map((v, i) => {
+    for (let j = 0; j < emergency.length; j++) {
+      if (v === emergency[j]) {
+        emergency[j] = i + 1;
+      }
+    }
+  });
+  return emergency;
 }
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let answer = solution(array);
-console.log(answer);
+let test = [3, 76, 24];
+solution(test);
